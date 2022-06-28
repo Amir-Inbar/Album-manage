@@ -1,24 +1,18 @@
-import { Link } from "react-router-dom";
-import { eventBusService } from "../services/eventBusService";
+import { Outlet, useNavigate } from "react-router-dom";
 
 export const PhotoPreview = (props) => {
-
-  const handleClick = (photoId) => {
-    eventBusService.emit("onRemove", photoId);
-  };
+const navigate = useNavigate()
 
   return (
-    <section className="photo-preview flex column">
-      {Object.entries(props.photo).map(([key, val]) => (
-        <span key={val}>
-          {key}:{val}
-        </span>
-      ))}
-      <div className="flex space-between">
-        <Link className="photo-preview--btn" to={`photo/${props.photo._id}`}>
-          Details
-        </Link>
-        <button onClick={() => handleClick(props.photo._id)}>Delete</button>
+    <section className="photo-preview card">
+      <img
+        src={props.photo.thumbnailUrl}
+        className="photo-preview--img card-img-top"
+        alt={props.photo.title}
+        onClick={()=> navigate(`${props.photo.id}`)}
+      />
+      <div className="card-body">
+        <h5 className="card-title">{props.photo.title}</h5>
       </div>
     </section>
   );

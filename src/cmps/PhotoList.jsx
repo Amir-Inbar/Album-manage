@@ -1,13 +1,15 @@
+import { Outlet } from "react-router-dom";
 import { PhotoPreview } from "./PhotoPreview";
 
 export const PhotoList = (props) => {
   return (
-    <section className="photo-list flex justify-center">
-      <ul className="photo-list__list flex">
-        {props.photos.map((photo) => (
-          <PhotoPreview photo={photo} key={photo._id}  />
+    <section className="photo-list container">
+      <div className="row row-cols-1 row-cols-sm-3 row-cols-md-4 g-6">
+        {props.photos.map((photo, idx) => (
+          <PhotoPreview photo={photo} key={idx} />
         ))}
-      </ul>
+      </div>
+      <Outlet />
     </section>
   );
 };

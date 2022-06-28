@@ -1,3 +1,4 @@
+import axios from "axios";
 import { httpService } from "./http.service";
 
 export const albumService = {
@@ -7,9 +8,9 @@ export const albumService = {
   update,
   remove,
 };
-
 async function query() {
-  return httpService.get("photos?_start=0&_limit=100");
+  const res = await axios.get("http://jsonplaceholder.typicode.com/photos?_start=0&_limit=100");
+  return res.data;
 }
 
 async function getById(photoId) {
@@ -24,8 +25,7 @@ async function update(photo) {
   // return httpService.put(API, photo);
 }
 async function remove(photoId) {
-  console.log(photoId);
-  // return httpService.delete(`${API}/${photoId}`);
+  return httpService.delete(`http://jsonplaceholder.typicode.com/photos/${photoId}`);
 }
 
 const photos = [

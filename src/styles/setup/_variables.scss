@@ -8,7 +8,11 @@ $clr6: #7bed9f;
 $clr7: #fff;
 $clr8: rgba(255, 255, 255, 0.26);
 
-$navHeight: 65px;
+:root{
+--dialogshadow: rgb(11, 20, 26);
+--dialong-bg:#fff;
+}
+
 
 // Breakpoints editor status
 $editor-mobile-breakpoint: 700px;

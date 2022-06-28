@@ -13,5 +13,6 @@
 
 // pages
 @import "pages/photo-app";
-@import "pages/photo-list";
-@import "pages/photo-preview";
+@import "cmps/photo-list";
+@import "cmps/photo-preview";
+@import "cmps/dialog-modal";
