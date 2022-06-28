@@ -1,14 +1,14 @@
 import { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { addphoto, getPhotoById, removePhoto } from "../store/actions/photoActions";
 
 export const PhotoDialog = () => {
-  const [displayPhoto, setDisplayPhoto] = useState();
-  // const photos = useSelector((state) => state.photoModule.photos);
+  const photo = useSelector((state) => state.photoModule.photo);
   const { photoId } = useParams();
   const navigate = useNavigate();
   const elDialog = useRef();
+  const dispatch = useDispatch()
 
   useEffect(() => {
     if (elDialog.current) {
@@ -16,10 +16,11 @@ export const PhotoDialog = () => {
       elDialog.current.showModal();
     }
 
-    if (!displayPhoto) {
+    if (!photo) {
+      dispatch(getPhotoById(photoId));
     }
   }, []);
-
+console.log(photo);
   return (
     <dialog className="dialog-modal" ref={elDialog}>
       <span>heyeyey</span>
