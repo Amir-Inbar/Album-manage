@@ -10,9 +10,6 @@ export const PhotoDialog = () => {
   const navigate = useNavigate();
   const elDialog = useRef();
 
-  const removeImg = removePhoto(photoId)
-  console.log(removeImg);
-
   useEffect(() => {
     if (elDialog.current) {
       elDialog.current.removeAttribute("open");
