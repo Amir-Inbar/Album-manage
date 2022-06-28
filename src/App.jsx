@@ -1,29 +1,26 @@
-import { HashRouter as Router, Route, Routes, Link } from "react-router-dom";
-import { TodoList } from "./cmps/TodoList";
+import { HashRouter as Router, Route, Routes } from "react-router-dom";
+import { PhotoList } from "./cmps/PhotoList";
 import "./styles/main.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { loadTodos, removeTodo } from "./store/actions/todoActions";
+import { loadphotos } from "./store/actions/photoActions";
 import { useEffect } from "react";
-import { TotoDetails } from "./pages/TodoDetails";
-import { eventBusService } from "./services/eventBusService";
+import { PhotoDetails } from "./pages/PhotoDetails";
 
 export function App() {
   const dispatch = useDispatch();
-  const todos = useSelector((state) => state.todoModule.todos);
+  const photos = useSelector((state) => state.photoModule.photos);
 
   useEffect(() => {
-    dispatch(loadTodos());
-    eventBusService.on("onRemove", (todoId) => {
-      const todo = removeTodo(todoId);
-    });
+    dispatch(loadphotos());
+
   }, []);
 
   return (
-    todos && (
+    photos && (
       <Router>
         <Routes>
-          <Route path="/" element={<TodoList todos={todos} />} />
-          <Route path="/todo/:todoId" element={<TotoDetails />} />
+          <Route path="/" element={<PhotoList photos={photos} />} />
+          <Route path="/photo/:photoId" element={<PhotoDetails />} />
         </Routes>
       </Router>
     )

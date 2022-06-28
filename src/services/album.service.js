@@ -1,6 +1,6 @@
-import { storageService } from "./async-storage.service";
+import { httpService } from "./http.service";
 
-export const todoService = {
+export const albumService = {
   query,
   getById,
   add,
@@ -8,63 +8,23 @@ export const todoService = {
   remove,
 };
 
-const API = "todo";
-_createTodos();
 
-async function query() {
-  return storageService.query(API);
+async function query(filterBy) {
+  return httpService.get("photo", filterBy);
 }
 
-async function getById(todoId) {
-  return storageService.get(API, todoId);
+async function getById(photoId) {
+  // return httpService.get(`${API}/${photoId}`);
 }
 
-async function add(todo) {
-  return storageService.post(API, todo);
+async function add(photo) {
+  // return httpService.post(API, photo);
 }
 
-async function update(todo) {
-  return storageService.put(API, todo);
+async function update(photo) {
+  // return httpService.put(API, photo);
 }
-async function remove(todoId) {
-  console.log(todoId);
-  return storageService.remove(API, todoId);
+async function remove(photoId) {
+  console.log(photoId);
+  // return httpService.delete(`${API}/${photoId}`);
 }
-
-async function _createTodos() {
-  let todos = await query();
-  if (!todos || !todos.length) {
-    localStorage.setItem(API, JSON.stringify(TODOS));
-  }
-}
-
-const TODOS = [
-  {
-    _id: "A5FLD",
-    txt: "Start a vue project",
-    createdAt: Date.now(),
-    createdBy: "Shocko Moko",
-    category: "school",
-  },
-  {
-    _id: "OVJD7",
-    txt: "Add typescript",
-    createdAt: Date.now(),
-    createdBy: "Shocko Moko",
-    category: "personal",
-  },
-  {
-    _id: "PDJ8S",
-    txt: "Sleep",
-    createdAt: Date.now(),
-    createdBy: "Lihi",
-    category: "personal",
-  },
-  {
-    _id: "3S5CI",
-    txt: "🍓🍇🍒🥑",
-    createdAt: Date.now(),
-    createdBy: "Locko",
-    category: "work",
-  },
-];
