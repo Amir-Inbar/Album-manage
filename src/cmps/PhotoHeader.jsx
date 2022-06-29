@@ -39,6 +39,7 @@ export const PhotoHeader = (props) => {
           aria-describedby="textExample1"
           onChange={(ev) => setPhotoTitle(ev.target.value)}
           ref={elPhotoTitle}
+          required
         />
         <button type="submit" className="btn btn-success btn-sm">
           Add photo
