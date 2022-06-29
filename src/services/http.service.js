@@ -1,7 +1,6 @@
 import Axios from 'axios';
 
-const BASE_URL =
-  process.env.NODE_ENV === 'production' ? '/api/' : "https://my-json-server.typicode.com/Amir-Inbar/Album-manage/photo";
+const BASE_URL = "https://my-json-server.typicode.com/Amir-Inbar/Album-manage/photo";
 
 var axios = Axios.create({
   withCredentials: true,

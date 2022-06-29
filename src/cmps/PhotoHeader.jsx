@@ -10,9 +10,10 @@ export const PhotoHeader = (props) => {
   const elPhotoUrl = useRef();
   const dispatch = useDispatch();
 
-  const onAddPhoto = () => {
+  const onAddPhoto = (ev) => {
+    ev.preventDefault()
     const thumbnailUrl = URL.createObjectURL(photoUrl);
-    const photo = { title: photoTitle, thumbnailUrl };
+    const photo = { title: photoTitle, thumbnailUrl,isLocal:true };
     dispatch(addphoto(photo));
 
     onClearInput();

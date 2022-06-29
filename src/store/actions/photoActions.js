@@ -19,21 +19,32 @@ export function loadphotos() {
 }
 
 export function loadPhoto(photoId) {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     try {
-      const photo = photoId ? await albumService.getById(photoId) : null;
-      dispatch(_setPhoto(photo));
+      const { photos } = getState().photoModule;
+      const photoFromCache = photos.filter((photo) => photo.id === photoId)[0];
+      if (photoFromCache) {
+        dispatch(_setPhoto(photoFromCache));
+      } else {
+        console.log(photoId);
+        const photo = photoId ? await albumService.getById(photoId) : null;
+        dispatch(_setPhoto(photo));
+      }
     } catch (error) {
       console.error("Can't load photo", error);
     }
   };
 }
 
-export function removePhoto(photoId) {
+export function removePhoto(photo) {
   return async (dispatch) => {
     try {
-      await albumService.remove(photoId);
-      dispatch(_removePhoto(photoId));
+      if (!photo.isLocal) {
+        await albumService.remove(photo.id);
+        dispatch(_removePhoto(photo.id));
+      } else {
+        dispatch(_removePhoto(photo.id));
+      }
     } catch (error) {
       console.error("Can't remove photo", error);
     }
@@ -55,8 +66,12 @@ export function addphoto(photo) {
 export function updatephoto(updatePhoto) {
   return async (dispatch) => {
     try {
-      const updatedPhoto = await albumService.update(updatePhoto);
-      dispatch(_updatePhoto(updatedPhoto));
+      if (!updatePhoto.isLocal) {
+        const updatedPhoto = await albumService.update(updatePhoto);
+        dispatch(_updatePhoto(updatedPhoto));
+      } else {
+        dispatch(_updatePhoto(updatePhoto));
+      }
     } catch (error) {
       console.error("Can't update photo", error);
     }

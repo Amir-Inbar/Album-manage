@@ -33,7 +33,7 @@ export const PhotoDialog = () => {
     onCloseModal();
     dispatch(removePhoto(photoId));
   };
-
+  console.log(photo);
   return (
     photo && (
       <div className="modal d-block" tabIndex="-1">
@@ -53,26 +53,26 @@ export const PhotoDialog = () => {
               <div className="flex space-between m-2">
                 <button
                   type="submit"
-                  className="btn btn-outline-secondary"
+                  className="btn btn-danger"
                   data-dismiss="modal"
-                  onClick={() => onCloseModal()}
+                  onClick={() => onRemovePhoto(photo)}
                 >
-                  Close
+                  Remove
                 </button>
-                <button
-              type="button"
-              className="btn btn-danger"
-              data-dismiss="modal"
-              onClick={() => onRemovePhoto(photo.id)}
-            >
-              Remove
-            </button>
-              </div>
-            </form>
-            
-            <button type="button" className="btn btn-primary" onClick={(ev)=>handleChange(ev)}>
+                <button type="submit" className="btn btn-primary" >
                   Save changes
                 </button>
+              </div>
+            </form>
+
+            <button
+              type="button"
+              className="btn btn-outline-secondary"
+              data-dismiss="modal"
+              onClick={() => onCloseModal()}
+            >
+              Close
+            </button>
           </div>
         </div>
       </div>
