@@ -18,7 +18,7 @@ export function photoReducer(state = initialState, action) {
     case "ADD_PHOTO":
       return {
         ...state,
-        photos: [...state.photos, action.photo],
+        photos: [ action.photo,...state.photos],
       };
     case "UPDATE_PHOTO":
       return {
