@@ -5,22 +5,22 @@ const initialState = {
 
 export function photoReducer(state = initialState, action) {
   switch (action.type) {
-    case "SET_photos":
+    case "SET_PHOTOS":
       return {
         ...state,
         photos: action.photos,
       };
-    case "SET_photo":
+    case "SET_PHOTO":
       return {
         ...state,
         photo: action.photo,
       };
-    case "ADD_photo":
+    case "ADD_PHOTO":
       return {
         ...state,
         photos: [...state.photos, action.photo],
       };
-    case "UPDATE_photo":
+    case "UPDATE_PHOTO":
       return {
         ...state,
         photos: state.photos.map((photo) => {
@@ -28,7 +28,7 @@ export function photoReducer(state = initialState, action) {
           return photo;
         }),
       };
-    case "REMOVE_photo":
+    case "REMOVE_PHOTO":
       return {
         ...state,
         photos: state.photos.filter((photo) => photo.id !== action.photoId),

@@ -1,30 +1,81 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { addphoto, getPhotoById, removePhoto } from "../store/actions/photoActions";
+import { loadPhoto, removePhoto, updatephoto } from "../store/actions/photoActions";
 
 export const PhotoDialog = () => {
   const photo = useSelector((state) => state.photoModule.photo);
+  const [photoTitle, setPhotoTitle] = useState();
   const { photoId } = useParams();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const elDialog = useRef();
-  const dispatch = useDispatch()
 
   useEffect(() => {
-    if (elDialog.current) {
-      elDialog.current.removeAttribute("open");
-      elDialog.current.showModal();
-    }
+    dispatch(loadPhoto(photoId));
 
-    if (!photo) {
-      dispatch(getPhotoById(photoId));
-    }
-  }, []);
-console.log(photo);
+    return () => {
+      dispatch(loadPhoto(null));
+    };
+  }, [photoId]);
+
+  const onCloseModal = () => {
+    navigate(-1);
+  };
+
+  const handleChange = (ev) => {
+    ev.preventDefault();
+    const updatePhoto = { ...photo, title: photoTitle };
+    dispatch(updatephoto(updatePhoto));
+    onCloseModal();
+  };
+
+  const onRemovePhoto = (photoId) => {
+    onCloseModal();
+    dispatch(removePhoto(photoId));
+  };
+
   return (
-    <dialog className="dialog-modal" ref={elDialog}>
-      <span>heyeyey</span>
-      <button onClick={() => navigate(-1)}></button>
-    </dialog>
+    photo && (
+      <div className="modal d-block" tabIndex="-1">
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h4>Photo: {photo.id}</h4>
+            </div>
+            <img src={photo.thumbnailUrl} alt="" />
+            <form className="modal-body p-30" onSubmit={handleChange}>
+              <input
+                type="text"
+                defaultValue={photo.title}
+                className="modal-dialog-container--input p-2"
+                onChange={(ev) => setPhotoTitle(ev.target.value)}
+              />
+              <div className="flex space-between m-2">
+                <button
+                  type="submit"
+                  className="btn btn-outline-secondary"
+                  data-dismiss="modal"
+                  onClick={() => onCloseModal()}
+                >
+                  Close
+                </button>
+                <button
+              type="button"
+              className="btn btn-danger"
+              data-dismiss="modal"
+              onClick={() => onRemovePhoto(photo.id)}
+            >
+              Remove
+            </button>
+              </div>
+            </form>
+            
+            <button type="button" className="btn btn-primary" onClick={(ev)=>handleChange(ev)}>
+                  Save changes
+                </button>
+          </div>
+        </div>
+      </div>
+    )
   );
 };
